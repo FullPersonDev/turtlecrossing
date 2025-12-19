@@ -13,6 +13,7 @@ screen.tracer(0)
 # Create player, car manager, and scoreboard
 player = Player()
 car_manager = CarManager()
+scoreboard = Scoreboard()
 
 # Listen for key presses
 screen.listen()
@@ -35,11 +36,13 @@ while game_is_on:
     # Detect collision with cars
     for car in car_manager.all_cars:
         if player.distance(car) < 20:
+            scoreboard.print_game_over()
             game_is_on = False
 
     # Detect if made it to the top
     if player.at_finish_line():
         car_manager.level_up()
+        scoreboard.level_up()
 
     # Increment turn variable
     turn += 1
