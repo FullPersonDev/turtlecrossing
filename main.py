@@ -25,12 +25,23 @@ while game_is_on:
     screen.update()
     time.sleep(0.1)
 
+    # Create new car every 6th iteration of this while loop
     if turn % 6 == 0:
         car_manager.create_car()
 
+    # Constantly move cars
     car_manager.move_cars()
-    player.refresh_turtle()
 
+    # Detect collision with cars
+    for car in car_manager.all_cars:
+        if player.distance(car) < 20:
+            game_is_on = False
+
+    # Detect if made it to the top
+    if player.at_finish_line():
+        car_manager.level_up()
+
+    # Increment turn variable
     turn += 1
 
 screen.exitonclick()
